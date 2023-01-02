@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 from typing_extensions import Protocol
 
 class _FileLike(Protocol):
-    def read(n: int) -> bytes: ...
+    def read(self, n: int) -> bytes: ...
 
 def unpackb(
     packed: bytes,
@@ -16,7 +16,7 @@ def unpackb(
     strict_map_key: bool = ...,
     object_hook: Optional[Callable[[Dict[Any, Any]], Any]] = ...,
     object_pairs_hook: Optional[Callable[[List[Tuple[Any, Any]]], Any]] = ...,
-    list_hook: Optional[[Callable[[List[Any]], Any]]] = ...,
+    list_hook: Optional[Callable[[List[Any]], Any]] = ...,
     unicode_errors: Optional[str] = ...,
     max_buffer_size: int = ...,
     ext_hook: Callable[[int, bytes], Any] = ...,
@@ -38,7 +38,7 @@ class Unpacker:
         strict_map_key: bool = ...,
         object_hook: Optional[Callable[[Dict[Any, Any]], Any]] = ...,
         object_pairs_hook: Optional[Callable[[List[Tuple[Any, Any]]], Any]] = ...,
-        list_hook: Optional[[Callable[[List[Any]], Any]]] = ...,
+        list_hook: Optional[Callable[[List[Any]], Any]] = ...,
         unicode_errors: Optional[str] = ...,
         max_buffer_size: int = ...,
         ext_hook: Callable[[int, bytes], Any] = ...,
@@ -47,7 +47,7 @@ class Unpacker:
         max_array_len: int = ...,
         max_map_len: int = ...,
         max_ext_len: int = ...,
-    ): ...
+    ) -> None: ...
     def feed(self, next_bytes: bytes) -> None: ...
     def read_bytes(self, n: int) -> bytearray: ...
     def __iter__(self) -> Unpacker: ...
@@ -69,7 +69,7 @@ class Packer:
         strict_types: bool = ...,
         datetime: bool = ...,
         unicode_errors: Optional[str] = ...,
-    ): ...
+    ) -> None: ...
     def pack(self, obj: Any) -> bytes: ...
     def pack_map_pairs(self, pairs: Any) -> bytes: ...
     def pack_array_header(self, n: int) -> bytes: ...
